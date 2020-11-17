@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 
 var loiNhuanSchema = new mongoose.Schema({
     so_lop : {
-        type: Number
+        type: String,
+        default: "",
     },
     he_so: {
         type: String,

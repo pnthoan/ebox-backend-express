@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var giaySchema = mongoose.Schema({
-    ma_sp: { type: String, required: true, unique: true },
-    ten_sp: { type: String, required: true },
+    ma_giay: { type: String, required: true, unique: true },
+    ten_giay: { type: String, required: true },
     so_lop: { type: Number, required: true },
-    gia_sp: { type: Number, required: true },
+    don_gia: { type: Number, required: true },
     mo_ta: { type: String, default: ""}
 });
 

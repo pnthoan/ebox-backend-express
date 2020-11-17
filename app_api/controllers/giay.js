@@ -30,10 +30,10 @@ module.exports.giayReadAll = function (req, res) {
 module.exports.giayCreate = function (req, res) {
     console.log(req.body);
     Giay.create({
-            ma_sp: req.body.ma_sp,
-            ten_sp: req.body.ten_sp,
+            ma_giay: req.body.ma_giay,
+            ten_giay: req.body.ten_giay,
             so_lop: req.body.so_lop,
-            gia_sp: req.body.gia_sp,
+            don_gia: req.body.don_gia,
             mo_ta: req.body.mo_ta
         }, function(err, giay) {
         if (err) {
@@ -62,7 +62,6 @@ module.exports.giayReadOne = function(req, res) {
                     sendJSONresponse(res, 404, err);
                     return;
                 }
-                console.log(giay);
                 sendJSONresponse(res, 200, giay);
             });
     } else {
@@ -94,19 +93,19 @@ module.exports.giayUpdateOne = function(req, res) {
                     return;
                 }
 
-                if (req.body.ma_sp) {
-                    giay.ma_sp = req.body.ma_sp;
+                if (req.body.ma_giay) {
+                    giay.ma_giay = req.body.ma_giay;
                 }
 
-                if (req.body.ten_sp) {
-                    giay.ten_sp = req.body.ten_sp;
+                if (req.body.ten_giay) {
+                    giay.ten_giay = req.body.ten_giay;
                 }
                 if (req.body.so_lop) {
                     giay.so_lop = req.body.so_lop;
                 }
 
-                if (req.body.gia_sp) {
-                    giay.gia_sp = req.body.gia_sp;
+                if (req.body.don_gia) {
+                    giay.don_gia = req.body.don_gia;
                 }
 
                 if (req.body.mo_ta) {
