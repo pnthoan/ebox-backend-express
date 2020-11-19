@@ -30,7 +30,7 @@ var ctrUpload = require('../controllers/uploadfile');
 router.post('/login', ctrlAuth.login);
 
 // user
-router.post('/user', authenticateToken, ctrlUsers.usersCreate);
+router.post('/user', ctrlUsers.usersCreate);
 router.get('/user', authenticateToken, ctrlUsers.userReadAll);
 router.get('/user/:userid', authenticateToken, ctrlUsers.userReadOne);
 router.put('/user/:userid', authenticateToken, ctrlUsers.userUpdateOne);

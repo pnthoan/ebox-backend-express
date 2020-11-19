@@ -73,6 +73,7 @@ module.exports.hopReadOne = function(req, res) {
 
 /* PUT /api/hop/:hopid */
 module.exports.hopUpdateOne = function(req, res) {
+    console.log(JSON.stringify(req.body))
     if (!req.params.hopid) {
         sendJSONresponse(res, 404, {
             "message": "Not found, locationid is required"
@@ -101,7 +102,10 @@ module.exports.hopUpdateOne = function(req, res) {
                 }
 
                 if (req.body.loi_nhuan) {
-                    hop.loi_nhuan = req.body.loi_nhuan;
+                    var ln
+                    for (ln of req.body.loi_nhuan) {
+                        hop.loi_nhuan.push({"he_so" : JSON.stringify(ln.he_so), "so_lop" : ln.so_lop});
+                    }
                 }
 
                 hop.save(function(err, hop) {
