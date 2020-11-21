@@ -102,9 +102,37 @@ module.exports.hopUpdateOne = function(req, res) {
                 }
 
                 if (req.body.loi_nhuan) {
+                    console.log(JSON.stringify(req.body.loi_nhuan))
                     var ln
+                    var found = false;
+                    var index
+
+                    // Insert and edit
                     for (ln of req.body.loi_nhuan) {
-                        hop.loi_nhuan.push({"he_so" : JSON.stringify(ln.he_so), "so_lop" : ln.so_lop});
+                        found = false;
+                        for (index in hop.loi_nhuan) {
+                            if (parseInt(ln.so_lop) === parseInt(hop.loi_nhuan[index].so_lop)) { // found
+                                found = true;
+                                hop.loi_nhuan[index].he_so = ln.he_so;
+                                break;
+                            }
+                        }
+                        if (!found) {
+                            hop.loi_nhuan.push({"he_so" : ln.he_so, "so_lop" : ln.so_lop});
+                        }
+                    }
+
+                    // remove
+                    for (index in hop.loi_nhuan) {
+                        found = false;
+                        for (ln of req.body.loi_nhuan) {
+                            if (parseInt(ln.so_lop) === parseInt(hop.loi_nhuan[index].so_lop)) {
+                                found = true;
+                            }
+                        }
+                        if (!found) {
+                            hop.loi_nhuan.splice(index, 1);
+                        }
                     }
                 }
 

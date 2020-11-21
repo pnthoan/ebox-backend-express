@@ -21,6 +21,35 @@ async function read_from_file(file) {
     });
 }
 
+async function export_to_file(file, data) {
+    console.log(file);
+    console.log(data);
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Sheet A");
+
+    var i = 0;
+    for (; i < data.length; i++) {
+        // console.log(JSON.stringify(data[i]));
+        worksheet.getRow(i + 1).values = data[i];
+    }
+    await workbook.xlsx.writeFile(file);
+    return path.parse(file).base;
+}
+
+module.exports.exportFile = async function (req, res) {
+    // console.log(req);
+    var name = "../../public/uploads/" + Date.now() + ".xlsx"
+    const file = path.join(__dirname, name);
+    console.log(file)
+    await export_to_file(file, req.body.he_so)
+    .then(data => {
+        sendJSONresponse(res, 200, data);
+    })
+    .catch(err => {
+        sendJSONresponse(res, 500, "Oops! Something went wrong!");
+    })
+}
+
 module.exports.uploadFile = async function (req, res) {
     // console.log(req)
     var data = req.body.data.data

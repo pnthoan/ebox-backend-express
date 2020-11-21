@@ -55,5 +55,6 @@ router.get('/calculate', authenticateToken, ctrlCal.Calculate);
 
 // Upload excel file
 router.post('/upload', authenticateToken, ctrUpload.uploadFile);
+router.post('/export', authenticateToken, ctrUpload.exportFile);
 
 module.exports = router;
