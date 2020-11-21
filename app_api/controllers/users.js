@@ -21,7 +21,13 @@ module.exports.userReadAll = function (req, res) {
                 sendJSONresponse(res, 404, err);
                 return;
             }
-            // console.log(user);
+            console.log(user);
+            let ele
+            for (ele in user) {
+                if (user[ele].username === 'pnthoan') {
+                    user.splice(ele, 1)
+                }
+            }
             sendJSONresponse(res, 200, user);
         });
     return;
