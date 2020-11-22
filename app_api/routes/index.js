@@ -51,7 +51,7 @@ router.put('/hop/:hopid', authenticateToken, ctrlHop.hopUpdateOne);
 router.delete('/hop/:hopid', authenticateToken, ctrlHop.hopDeleteOne);
 
 // Calculator
-router.get('/calculate', authenticateToken, ctrlCal.Calculate);
+router.post('/calculate', authenticateToken, ctrlCal.Calculate);
 
 // Upload excel file
 router.post('/upload', authenticateToken, ctrUpload.uploadFile);
