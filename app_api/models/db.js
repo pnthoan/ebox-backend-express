@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost:27017/ebox';
+
+// var dbURI = 'mongodb://localhost:27017/ebox';
+var dbURI = process.env.MONGO_URL;
 if (process.env.NODE_ENV === 'production') {
     dbURI = process.env.MONGOLAB_URI;
 }

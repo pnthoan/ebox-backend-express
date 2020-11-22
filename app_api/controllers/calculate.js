@@ -33,7 +33,7 @@ function getTileLoiNhuan(_cost, _sl, _he_so)
 
     let idx
     let idx_max
-    for (idx in _he_so) {
+    for (idx in _he_so) {zzsasz
         if (idx === 0) continue
         if (_he_so[idx][0] <= _cost) {
             idx_max = idx
