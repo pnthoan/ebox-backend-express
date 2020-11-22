@@ -19,6 +19,7 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'jade');
+app.set('port', 3001)
 
 app.use(cors());
 // uncomment after placing your favicon in /public
