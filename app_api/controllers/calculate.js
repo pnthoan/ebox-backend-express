@@ -59,10 +59,14 @@ function calPrice(_body, _gia_giay, _cong_thuc, _he_so)
   console.log(ct)
   console.log('pnthoan: ' + cost)
 
-  var giaban = giaBanHopSoLuong(cost, _he_so);
-  /*
   //Tinh gia
+  var ti_le = getTileLoiNhuan(cost, _body.soluong, _he_so);
+  var giaban = ti_le * cost
 
+  if (_body.khuon.iskhuon === true) {
+    giaban = giaban + _body.khuon.giakhuon / _body.soluong
+  }
+  /*
   //Khuon
   var _gia_khuon_hop_gai = 600000;
   if (_khuon == true)
