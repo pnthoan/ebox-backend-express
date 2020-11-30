@@ -10,7 +10,7 @@ var sendJSONresponse = function(res, status, content) {
 
 function getIdxSoluong(sl, sl_range)
 {
-    // console.log(sl_range)
+    console.log(sl_range)
     var i
     var index = 0
     for(i in sl_range[0]) {
@@ -33,7 +33,7 @@ function getTileLoiNhuan(_cost, _sl, _he_so)
         return -1;
     }
 
-    // console.log("index_sl = " + index_sl)
+    console.log("index_sl = " + index_sl)
     let idx
     let idx_max = 0
     for (idx in _he_so) {
@@ -45,14 +45,14 @@ function getTileLoiNhuan(_cost, _sl, _he_so)
     if (idx_max < 1) {
         idx_max = 1
     }
-    // console.log("idx_max = " + idx_max)
+    console.log("idx_max = " + idx_max)
     return _he_so[idx_max][index_sl];
 }
 
 function calPrice(_body, _gia_giay, _cong_thuc, _he_so)
 {
-  // console.log("BODY: " + JSON.stringify(_body))
-  // console.log("Heso: " + _he_so)
+  console.log("BODY: " + JSON.stringify(_body))
+  console.log("Heso: " + _he_so)
 
   var ct = _cong_thuc.replace(/d/g, _body.chieudai);
   var ct = ct.replace(/r/g, _body.chieurong);
@@ -78,7 +78,7 @@ function calPrice(_body, _gia_giay, _cong_thuc, _he_so)
   //Mau in
   if (_body.in.isprint === true) {
     console.log("Has print!")
-    giaban = giaban + 300 * _body.in.soluongmau;
+    giaban = giaban + 500 * _body.in.soluongmau;
   }
   // console.log("Sau tinh In: " + giaban)
   giaban = Math.round(giaban);
@@ -89,7 +89,7 @@ function calPrice(_body, _gia_giay, _cong_thuc, _he_so)
 /* GET /api/giay */
 module.exports.Calculate = function (req, res) {
     // const {loaihop, loaigiay, chieudai, chieurong, chieucao, soluong, giakhuon} = req.body
-    // console.log(JSON.stringify(req.body))
+    console.log(JSON.stringify(req.body))
     return Giay.find({ma_giay: req.body.loaigiay})
    .exec(function(err, giay) {
         if (giay.length <= 0) {
