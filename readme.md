@@ -35,3 +35,17 @@
 }
 
 ```
+
+```
+{
+   "loaihop":"Hộp thường size lớn",
+   "loaigiay":"1N2X",
+   "dai":"10",
+   "rong":"20",
+   "cao":"30",
+   "soluong":"350",
+   "soluongmau":"1",
+   "gia":6815,
+   "ghichu":""
+}
+```

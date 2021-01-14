@@ -51,3 +51,5 @@ process.on('SIGTERM', function() {
 require('./usersModel');
 require('./giayModel');
 require('./hopModel');
+require('./donHangModel');
+require('./itemModel');
