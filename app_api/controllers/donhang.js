@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var DonHang = mongoose.model('DonHangModel');
+var Item = mongoose.model('ItemModel');
 
 var sendJSONresponse = function(res, status, content) {
     res.status(status);
@@ -19,7 +20,28 @@ module.exports.dhangCreate = function (req, res) {
         if (err) {
             sendJSONresponse(res, 400, err);
         } else {
-            sendJSONresponse(res, 201, dhang);
+            if (!req.body.list_ids) {
+                sendJSONresponse(res, 404, {
+                    "message": "Does not have IDs"
+                });
+                return
+            }
+
+            console.log(dhang)
+            Item.updateMany({_id: {$in: req.body.list_ids}}, {$set: {id_refer: dhang._id}})
+           .exec(function(err, item) {
+                if (!item) {
+                    sendJSONresponse(res, 404, {
+                        "message": "itemId not found"
+                    });
+                    return;
+                } else if (err) {
+                    sendJSONresponse(res, 404, err);
+                    return;
+                }
+                console.log(item)
+                sendJSONresponse(res, 200, item);
+            });
         }
     });
 };

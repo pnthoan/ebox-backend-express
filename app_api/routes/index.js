@@ -27,6 +27,7 @@ var ctrlCal = require('../controllers/calculate');
 var ctrUpload = require('../controllers/uploadfile');
 var ctrlDonHang = require('../controllers/donhang');
 var ctrlItem = require('../controllers/item');
+var ctrlOrder = require('../controllers/createorder');
 
 // authentication
 router.post('/login', ctrlAuth.login);
@@ -60,11 +61,15 @@ router.post('/upload', authenticateToken, ctrUpload.uploadFile);
 router.post('/export', authenticateToken, ctrUpload.exportFile);
 
 // Don Hang
-router.post('/dhang', authenticateToken, ctrlDonHang.dhangCreate);
+router.post('/dhang', ctrlDonHang.dhangCreate);
 
 // Item
-router.post('/item/query', authenticateToken, ctrlItem.itemQuery);
-router.post('/item', authenticateToken, ctrlItem.itemCreate);
-router.get('/item/:itemid', authenticateToken, ctrlItem.itemReadOne);
-router.delete('/item/:itemid', authenticateToken, ctrlItem.itemDeleteOne);
+router.post('/item/query', ctrlItem.itemQuery);
+router.post('/item', ctrlItem.itemCreate);
+router.get('/item/:itemid', ctrlItem.itemReadOne);
+router.put('/item', ctrlItem.itemUpdateMany);
+router.delete('/item/:itemid', ctrlItem.itemDeleteOne);
+
+router.post('/createorder', ctrlOrder.orderCreate);
+
 module.exports = router;

@@ -9,19 +9,25 @@ var sendJSONresponse = function(res, status, content) {
 /* GET /api/item */
 module.exports.itemQuery = function (req, res) {
     console.log(req.body)
-    Item.find()
-       .exec(function(err, item) {
-            if (!item) {
-                sendJSONresponse(res, 404, {
-                    "message": "itemId not found"
-                });
-                return;
-            } else if (err) {
-                sendJSONresponse(res, 404, err);
-                return;
-            }
-            sendJSONresponse(res, 200, item);
+    if (!req.body.condition) {
+        sendJSONresponse(res, 404, {
+            "message": "condition invalid"
         });
+        return
+    }
+    Item.find(req.body.condition)
+   .exec(function(err, item) {
+        if (!item) {
+            sendJSONresponse(res, 404, {
+                "message": "itemId not found"
+            });
+            return;
+        } else if (err) {
+            sendJSONresponse(res, 404, err);
+            return;
+        }
+        sendJSONresponse(res, 200, item);
+    });
     return;
 };
 
@@ -29,6 +35,7 @@ module.exports.itemQuery = function (req, res) {
 module.exports.itemCreate = function (req, res) {
     console.log(req.body);
     Item.create({
+            user: req.body.user,
             loaihop: req.body.loaihop,
             loaigiay: req.body.loaigiay,
             dai: parseInt(req.body.dai),
@@ -51,23 +58,50 @@ module.exports.itemCreate = function (req, res) {
 module.exports.itemReadOne = function(req, res) {
     if (req.params && req.params.itemid) {
         Item.findById(req.params.itemid)
-           .exec(function(err, item) {
-                if (!item) {
-                    sendJSONresponse(res, 404, {
-                        "message": "itemId not found"
-                    });
-                    return;
-                } else if (err) {
-                    sendJSONresponse(res, 404, err);
-                    return;
-                }
-                sendJSONresponse(res, 200, item);
-            });
+       .exec(function(err, item) {
+            if (!item) {
+                sendJSONresponse(res, 404, {
+                    "message": "itemId not found"
+                });
+                return;
+            } else if (err) {
+                sendJSONresponse(res, 404, err);
+                return;
+            }
+            sendJSONresponse(res, 200, item);
+        });
     } else {
         sendJSONresponse(res, 404, {
             "message": "No itemId in request"
         });
     }
+};
+
+/* PUT /api/item*/
+module.exports.itemUpdateMany = function(req, res) {
+    console.log(req.body)
+
+    if (!req.body.condition || !req.body.content) {
+        sendJSONresponse(res, 404, {
+            "message": "Invalid Input"
+        });
+        return
+    }
+
+    Item.updateMany(req.body.condition, req.body.content)
+   .exec(function(err, item) {
+        if (!item) {
+            sendJSONresponse(res, 404, {
+                "message": "itemId not found"
+            });
+            return;
+        } else if (err) {
+            sendJSONresponse(res, 404, err);
+            return;
+        }
+        console.log(item)
+        sendJSONresponse(res, 200, item);
+    });
 };
 
 /* DELETE /api/item/:itemid */

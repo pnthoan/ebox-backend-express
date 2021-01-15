@@ -11,6 +11,8 @@ var ItemSchema = mongoose.Schema({
     gia: { type: Number, default: 0},
     ghichu: { type: String, default: ""},
 
+    id_refer: { type: String, default: ""},
+
     user: { type: String, required: true},
     created_at: {
         type: Date,
