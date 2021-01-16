@@ -8,7 +8,6 @@ var sendJSONresponse = function(res, status, content) {
 
 /* GET /api/item */
 module.exports.itemQuery = function (req, res) {
-    console.log(req.body)
     if (!req.body.condition) {
         sendJSONresponse(res, 404, {
             "message": "condition invalid"
@@ -33,7 +32,6 @@ module.exports.itemQuery = function (req, res) {
 
 /* POST /api/item */
 module.exports.itemCreate = function (req, res) {
-    console.log(req.body);
     Item.create({
             user: req.body.user,
             loaihop: req.body.loaihop,
@@ -44,6 +42,8 @@ module.exports.itemCreate = function (req, res) {
             soluong: parseInt(req.body.soluong),
             soluongmau: parseInt(req.body.soluongmau),
             gia: parseFloat(req.body.gia),
+            iskhuon:req.body.iskhuon,
+            isprint:req.body.isprint,
             ghichu: req.body.ghichu
         }, function(err, item) {
         if (err) {
@@ -79,8 +79,6 @@ module.exports.itemReadOne = function(req, res) {
 
 /* PUT /api/item*/
 module.exports.itemUpdateMany = function(req, res) {
-    console.log(req.body)
-
     if (!req.body.condition || !req.body.content) {
         sendJSONresponse(res, 404, {
             "message": "Invalid Input"
@@ -99,7 +97,7 @@ module.exports.itemUpdateMany = function(req, res) {
             sendJSONresponse(res, 404, err);
             return;
         }
-        console.log(item)
+
         sendJSONresponse(res, 200, item);
     });
 };
@@ -107,7 +105,6 @@ module.exports.itemUpdateMany = function(req, res) {
 /* DELETE /api/item/:itemid */
 module.exports.itemDeleteOne = function(req, res) {
     var itemid = req.params.itemid;
-    console.log(itemid)
     if (itemid) {
         Item.findByIdAndRemove(itemid)
         .exec(

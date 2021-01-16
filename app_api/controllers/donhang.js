@@ -9,7 +9,6 @@ var sendJSONresponse = function(res, status, content) {
 
 /* POST /api/dhang */
 module.exports.dhangCreate = function (req, res) {
-    console.log(req.body);
     DonHang.create({
             khach_hang: req.body.khach_hang,
             lien_he: req.body.lien_he,
@@ -27,7 +26,6 @@ module.exports.dhangCreate = function (req, res) {
                 return
             }
 
-            console.log(dhang)
             Item.updateMany({_id: {$in: req.body.list_ids}}, {$set: {id_refer: dhang._id}})
            .exec(function(err, item) {
                 if (!item) {
@@ -39,7 +37,6 @@ module.exports.dhangCreate = function (req, res) {
                     sendJSONresponse(res, 404, err);
                     return;
                 }
-                console.log(item)
                 sendJSONresponse(res, 200, item);
             });
         }

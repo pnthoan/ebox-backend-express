@@ -10,6 +10,8 @@ var ItemSchema = mongoose.Schema({
     soluongmau: { type: Number, default: 0},
     gia: { type: Number, default: 0},
     ghichu: { type: String, default: ""},
+    isprint: { type: Boolean, default: false},
+    iskhuon: { type: Boolean, default: false},
 
     id_refer: { type: String, default: ""},
 

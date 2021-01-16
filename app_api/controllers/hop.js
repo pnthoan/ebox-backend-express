@@ -16,11 +16,9 @@ module.exports.hopReadAll = function (req, res) {
                 });
                 return;
             } else if (err) {
-                console.log(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
-            console.log(hop);
             sendJSONresponse(res, 200, hop);
         });
     return;
@@ -28,17 +26,14 @@ module.exports.hopReadAll = function (req, res) {
 
 /* POST /api/hop */
 module.exports.hopCreate = function (req, res) {
-    console.log(req.body);
     Hop.create({
         loai_hop: req.body.loai_hop,
         cong_thuc: req.body.cong_thuc,
         loi_nhuan: req.body.loi_nhuan
         }, function(err, hop) {
         if (err) {
-            console.log(err);
             sendJSONresponse(res, 400, err);
         } else {
-            console.log(hop);
             sendJSONresponse(res, 201, hop);
         }
     });
@@ -46,25 +41,21 @@ module.exports.hopCreate = function (req, res) {
 
 /* GET /api/hop/:hopid */
 module.exports.hopReadOne = function(req, res) {
-    console.log('Finding location details', req.params);
     if (req.params && req.params.hopid) {
         Hop.findById(req.params.hopid)
-           .exec(function(err, hop) {
-                if (!hop) {
-                    sendJSONresponse(res, 404, {
-                        "message": "hopId not found"
-                    });
-                    return;
-                } else if (err) {
-                    console.log(err);
-                    sendJSONresponse(res, 404, err);
-                    return;
-                }
-                console.log(hop);
-                sendJSONresponse(res, 200, hop);
-            });
+       .exec(function(err, hop) {
+            if (!hop) {
+                sendJSONresponse(res, 404, {
+                    "message": "hopId not found"
+                });
+                return;
+            } else if (err) {
+                sendJSONresponse(res, 404, err);
+                return;
+            }
+            sendJSONresponse(res, 200, hop);
+        });
     } else {
-        console.log('No hopId specified');
         sendJSONresponse(res, 404, {
             "message": "No hopId in request"
         });
@@ -73,7 +64,6 @@ module.exports.hopReadOne = function(req, res) {
 
 /* PUT /api/hop/:hopid */
 module.exports.hopUpdateOne = function(req, res) {
-    console.log(JSON.stringify(req.body))
     if (!req.params.hopid) {
         sendJSONresponse(res, 404, {
             "message": "Not found, locationid is required"
@@ -102,7 +92,6 @@ module.exports.hopUpdateOne = function(req, res) {
                 }
 
                 if (req.body.loi_nhuan) {
-                    console.log(JSON.stringify(req.body.loi_nhuan))
                     var ln
                     var found = false;
                     var index
@@ -150,19 +139,16 @@ module.exports.hopUpdateOne = function(req, res) {
 /* DELETE /api/hop/:hopid */
 module.exports.hopDeleteOne = function(req, res) {
     var hopid = req.params.hopid;
-    console.log(hopid)
     if (hopid) {
         Hop.findByIdAndRemove(hopid)
-           .exec(
-                function(err, hopid) {
-                    if (err) {
-                        console.log(err);
-                        sendJSONresponse(res, 404, err);
-                        return;
-                    }
-                    console.log("hop id " + hopid + " deleted");
-                    sendJSONresponse(res, 204, null);
+       .exec(
+            function(err, hopid) {
+                if (err) {
+                    sendJSONresponse(res, 404, err);
+                    return;
                 }
+                sendJSONresponse(res, 204, null);
+            }
         );
     } else {
         sendJSONresponse(res, 404, {

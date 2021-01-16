@@ -8,7 +8,6 @@ var sendJSONresponse = function(res, status, content) {
 
 /* GET /api/user */
 module.exports.userReadAll = function (req, res) {
-    console.log('userReadAll function');
     User.find()
        .exec(function(err, user) {
             if (!user) {
@@ -17,11 +16,9 @@ module.exports.userReadAll = function (req, res) {
                 });
                 return;
             } else if (err) {
-                console.log(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
-            console.log(user);
             let ele
             for (ele in user) {
                 if (user[ele].username === 'pnthoan') {
@@ -35,8 +32,6 @@ module.exports.userReadAll = function (req, res) {
 
 /* POST /api/user */
 module.exports.usersCreate = function (req, res) {
-    console.log(req.body);
-
     if(!req.body.name || !req.body.email ||
         !req.body.password || !req.body.username ||
         !req.body.role || !req.body.phone || !req.body.address) {
@@ -70,25 +65,21 @@ module.exports.usersCreate = function (req, res) {
 
 /* GET /api/user/:userid */
 module.exports.userReadOne = function(req, res) {
-    console.log('Finding location details', req.params);
     if (req.params && req.params.userid) {
         User.findById(req.params.userid)
-           .exec(function(err, user) {
-                if (!user) {
-                    sendJSONresponse(res, 404, {
-                        "message": "userId not found"
-                    });
-                    return;
-                } else if (err) {
-                    console.log(err);
-                    sendJSONresponse(res, 404, err);
-                    return;
-                }
-                // console.log(user);
-                sendJSONresponse(res, 200, user);
-            });
+       .exec(function(err, user) {
+            if (!user) {
+                sendJSONresponse(res, 404, {
+                    "message": "userId not found"
+                });
+                return;
+            } else if (err) {
+                sendJSONresponse(res, 404, err);
+                return;
+            }
+            sendJSONresponse(res, 200, user);
+        });
     } else {
-        console.log('No userId specified');
         sendJSONresponse(res, 404, {
             "message": "No userId in request"
         });
@@ -157,19 +148,16 @@ module.exports.userUpdateOne = function(req, res) {
 /* DELETE /api/user/:userid */
 module.exports.userDeleteOne = function(req, res) {
     var userid = req.params.userid;
-    console.log(userid)
     if (userid) {
         User.findByIdAndRemove(userid)
-           .exec(
-                function(err, userid) {
-                    if (err) {
-                        console.log(err);
-                        sendJSONresponse(res, 404, err);
-                        return;
-                    }
-                    console.log("user id " + userid + " deleted");
-                    sendJSONresponse(res, 204, null);
+       .exec(
+            function(err, userid) {
+                if (err) {
+                    sendJSONresponse(res, 404, err);
+                    return;
                 }
+                sendJSONresponse(res, 204, null);
+            }
         );
     } else {
         sendJSONresponse(res, 404, {

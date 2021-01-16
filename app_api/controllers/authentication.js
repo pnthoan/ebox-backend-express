@@ -7,7 +7,6 @@ var sendJSONresponse = function(res, status, content) {
 };
 
 module.exports.login = function(req, res) {
-    console.log("LOGIN!!!!!!!!!!!!")
     if(!req.body.username || !req.body.password) {
         sendJSONresponse(res, 400, {
             "message": "All fields required"
@@ -24,7 +23,6 @@ module.exports.login = function(req, res) {
         }
 
         if(user){
-            console.log(user);
             token = user.generateJwt();
             sendJSONresponse(res, 200, {
                 "token" : token,

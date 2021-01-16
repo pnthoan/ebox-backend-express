@@ -16,11 +16,9 @@ module.exports.giayReadAll = function (req, res) {
                 });
                 return;
             } else if (err) {
-                console.log(err);
                 sendJSONresponse(res, 404, err);
                 return;
             }
-            console.log(giay);
             sendJSONresponse(res, 200, giay);
         });
     return;
@@ -28,7 +26,6 @@ module.exports.giayReadAll = function (req, res) {
 
 /* POST /api/giay */
 module.exports.giayCreate = function (req, res) {
-    console.log(req.body);
     Giay.create({
             ma_giay: req.body.ma_giay,
             ten_giay: req.body.ten_giay,
@@ -37,10 +34,8 @@ module.exports.giayCreate = function (req, res) {
             mo_ta: req.body.mo_ta
         }, function(err, giay) {
         if (err) {
-            console.log(err);
             sendJSONresponse(res, 400, err);
         } else {
-            console.log(giay);
             sendJSONresponse(res, 201, giay);
         }
     });
@@ -48,7 +43,6 @@ module.exports.giayCreate = function (req, res) {
 
 /* GET /api/giay/:giayid */
 module.exports.giayReadOne = function(req, res) {
-    console.log('Finding location details', req.params);
     if (req.params && req.params.giayid) {
         Giay.findById(req.params.giayid)
            .exec(function(err, giay) {
@@ -58,14 +52,12 @@ module.exports.giayReadOne = function(req, res) {
                     });
                     return;
                 } else if (err) {
-                    console.log(err);
                     sendJSONresponse(res, 404, err);
                     return;
                 }
                 sendJSONresponse(res, 200, giay);
             });
     } else {
-        console.log('No giayId specified');
         sendJSONresponse(res, 404, {
             "message": "No giayId in request"
         });
@@ -126,19 +118,16 @@ module.exports.giayUpdateOne = function(req, res) {
 /* DELETE /api/giay/:giayid */
 module.exports.giayDeleteOne = function(req, res) {
     var giayid = req.params.giayid;
-    console.log(giayid)
     if (giayid) {
         Giay.findByIdAndRemove(giayid)
-           .exec(
-                function(err, giayid) {
-                    if (err) {
-                        console.log(err);
-                        sendJSONresponse(res, 404, err);
-                        return;
-                    }
-                    console.log("giay id " + giayid + " deleted");
-                    sendJSONresponse(res, 204, null);
+       .exec(
+            function(err, giayid) {
+                if (err) {
+                    sendJSONresponse(res, 404, err);
+                    return;
                 }
+                sendJSONresponse(res, 204, null);
+            }
         );
     } else {
         sendJSONresponse(res, 404, {
