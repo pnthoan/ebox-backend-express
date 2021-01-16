@@ -1,5 +1,5 @@
 {
-  "name": "loc8r",
+  "name": "Ebox",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -8,6 +8,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "core-js": "^3.8.2",
     "cors": "^2.8.5",
     "debug": "^4.2.0",
     "dotenv": "^8.2.0",
@@ -22,6 +23,7 @@
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "regenerator-runtime": "^0.13.7",
     "request": "^2.88.2",
     "serve-favicon": "^2.5.0",
     "uglify-js": "^3.11.5"
